@@ -1,27 +1,26 @@
-package com.microservices.accounts.model;
+package com.microservices.loans.entity;
 
+import com.microservices.loans.audit.AuditAwareImpl;
 import jakarta.persistence.Column;
 import jakarta.persistence.EntityListeners;
 import jakarta.persistence.MappedSuperclass;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedBy;
 import org.springframework.data.annotation.LastModifiedDate;
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDateTime;
-
-
-@MappedSuperclass // act as a superclass for all other entities
-@Getter @Setter @ToString
-@EntityListeners(AuditingEntityListener.class) // this would enable the base entity to listen for the AuditAwareImplementation
+@MappedSuperclass
+@Getter @Setter @AllArgsConstructor @NoArgsConstructor
+@EntityListeners(AuditAwareImpl.class)
 public class BaseEntity {
 
     @CreatedDate
-    @Column(updatable = false) /// cant be updated
+    @Column(updatable = false)
     private LocalDateTime createdAt;
 
     @CreatedBy
@@ -32,8 +31,7 @@ public class BaseEntity {
     @Column(insertable = false)
     private LocalDateTime updatedAt;
 
-    @LastModifiedBy  // these annotations won't work alone.To make them work
-    // we need to implement custom logic and override method of AuditorAware class
+    @LastModifiedBy
     @Column(insertable = false)
     private String updatedBy;
 }

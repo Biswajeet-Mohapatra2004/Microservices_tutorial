@@ -8,9 +8,11 @@ import java.util.Optional;
 public class CustomerMapper {
 
     public static CustomerDTO mapToCustomerDto(Optional<Customer> customer, CustomerDTO customerDto) {
-        customerDto.setName(customer.get().getName());
-        customerDto.setEmail(customer.get().getEmail());
-        customerDto.setMobileNumber(customer.get().getMobileNumber());
+        if(customer.isPresent()){
+            customerDto.setName(customer.get().getName());
+            customerDto.setEmail(customer.get().getEmail());
+            customerDto.setMobileNumber(customer.get().getMobileNumber());
+        }
         return customerDto;
     }
 

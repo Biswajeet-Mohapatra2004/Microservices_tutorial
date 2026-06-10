@@ -1,14 +1,11 @@
-package com.microservices.accounts.dto;
+package com.microservices.loans.dto;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
-@Schema(
-        name = "Http response",
-        description = "The formatted http responses"
-)
-@Data @AllArgsConstructor
+@Data
+@AllArgsConstructor
 public class ResponseDTO {
 
     @Schema(
