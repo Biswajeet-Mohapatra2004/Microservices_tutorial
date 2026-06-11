@@ -12,7 +12,7 @@ public class AuditAwareImpl implements AuditorAware<String> {
     // we want to write the custom logic for createdBy and updatedBy annotation
 
     /**
-     * for now we are not going to inject the user's context
+     * for now, we are not going to inject the user's context
      * we will simply return a hardcoded values for now
      * @return
      */

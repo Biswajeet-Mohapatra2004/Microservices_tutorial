@@ -39,7 +39,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 		),
 		externalDocs = @ExternalDocumentation(
 				description = "Eazybank account microservice REST API documentation",
-				url = "http://localhost8080/swagger-ui/index.html"
+				url = "http://localhost:8080/swagger-ui/index.html"
 		)
 )
 
