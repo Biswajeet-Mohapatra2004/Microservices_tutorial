@@ -6,6 +6,10 @@ import lombok.Data;
 
 @Data
 @AllArgsConstructor
+@Schema(
+        name = "The Response schema",
+        description = "It specifies a custom response involving the status code and custom status message"
+)
 public class ResponseDTO {
 
     @Schema(
