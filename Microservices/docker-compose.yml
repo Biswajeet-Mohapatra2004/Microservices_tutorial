@@ -1,0 +1,48 @@
+# define service details first
+services:
+  # define service name
+  accounts:
+    # define the image to use for the service
+    image: biswajeetmohapatra2004/accounts:s4
+    container_name: accounts_container
+    ports:
+      - "8080:8080"
+
+    # telling the service to use at max 700 MB of memory
+    deploy:
+      resources:
+        limits:
+          memory: 700m
+    # tag all these services with the same network name so that they can communicate with each other
+    networks:
+      - banking-network
+  loans:
+    image: biswajeetmohapatra2004/loans:s4
+    container_name: loans_container
+    ports:
+      - "8090:8090"
+    deploy:
+      resources:
+        limits:
+          memory: 700m
+    # tag all these services with the same network name so that they can communicate with each other
+    networks:
+     - banking-network
+  cards:
+    image: biswajeetmohapatra2004/cards:s4
+    container_name: cards_container
+    ports:
+      - "9000:9000"
+    deploy:
+      resources:
+        limits:
+          memory: 700m
+  # tag all these services with the same network name so that they can communicate with each other
+    networks:
+      - banking-network
+
+# define the network
+networks:
+  banking-network:
+    driver: bridge # please use bridge driver for the network so that all the services can communicate with each other
+
