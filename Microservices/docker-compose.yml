@@ -44,5 +44,5 @@ services:
 # define the network
 networks:
   banking-network:
-    driver: bridge # please use bridge driver for the network so that all the services can communicate with each other
+    driver: bridge # please use a bridge driver for the network so that all the services can communicate with each other
 

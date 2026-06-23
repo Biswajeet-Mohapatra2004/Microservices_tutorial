@@ -1,6 +1,7 @@
 package com.microservices.accounts.controller;
 
 import com.microservices.accounts.constants.AccountsConstants;
+import com.microservices.accounts.dto.AccountsContactInfoDto;
 import com.microservices.accounts.dto.CustomerDTO;
 import com.microservices.accounts.dto.ErrorResponseDTO;
 import com.microservices.accounts.dto.ResponseDTO;
@@ -15,6 +16,8 @@ import jakarta.validation.Valid;
 import jakarta.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.env.Environment;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -30,11 +33,20 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping(path="/api", produces = MediaType.APPLICATION_JSON_VALUE)
 @Validated // enables the controller to check for the model input validation
-@AllArgsConstructor
 public class AccountsController {
+
+    @Value("${build.version}")
+    private String buildVersion;
+
+    //using the environment class to fetch the build version from the application properties file
+    @Autowired
+    private Environment environment;
 
     @Autowired
     private IAccountsService accountsService;
+
+    @Autowired
+    private AccountsContactInfoDto accountsContactInfoDto;
 
     @Operation(
             summary = "A RestAPI endpoint to create an account associated with a new user",
@@ -152,5 +164,45 @@ public class AccountsController {
                     .body(new ResponseDTO(AccountsConstants.STATUS_417,AccountsConstants.MESSAGE_417_DELETE));
 
         }
+    }
+
+    @Operation(
+            summary = "A RestAPI endpoint to view the build information of the service.",
+            description = "The endpoint returns the build version of the service which is fetched from the application properties file."
+    )
+    @ApiResponse(
+            responseCode = "200",
+            description = "Http Status OK"
+    )
+    @GetMapping(path = "/build-info", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<String> getBuildInfo(){
+        return ResponseEntity.status(HttpStatus.OK).body(buildVersion);
+    }
+
+    @Operation(
+            summary = "A RestAPI endpoint to view the java version information of the service.",
+            description = "The endpoint returns the java version of the service which is fetched from the application properties file."
+    )
+    @ApiResponse(
+            responseCode = "200",
+            description = "Http Status OK"
+    )
+    @GetMapping(path = "/java-version", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<String> getJavaVersion(){
+        return ResponseEntity.status(HttpStatus.OK).body(environment.getProperty("JAVA_HOME"));
+    }
+
+
+    @Operation(
+            summary = "A RestAPI endpoint to get the contact information.",
+            description = "The endpoint returns the contact information of the service which is fetched from the application properties file."
+    )
+    @ApiResponse(
+            responseCode = "200",
+            description = "Http Status OK"
+    )
+    @GetMapping(path = "/contact-info", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<AccountsContactInfoDto> getContactInfo(){
+        return ResponseEntity.status(HttpStatus.OK).body(accountsContactInfoDto);
     }
 }

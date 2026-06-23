@@ -79,9 +79,15 @@
 
 	<build>
 		<plugins>
+<!--			Modified the spring boot plugin to support build packs -->
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
+				<configuration>
+					<image>
+						<name>biswajeetmohapatra2004/${project.artifactId}:s6</name>
+					</image>
+				</configuration>
 			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -96,16 +102,17 @@
 					</annotationProcessorPaths>
 				</configuration>
 			</plugin>
-			<plugin>
-				<groupId>com.google.cloud.tools</groupId>
-				<artifactId>jib-maven-plugin</artifactId>
-				<version>3.5.1</version>
-				<configuration>
-					<to>
-						<image>biswajeetmohapatra2004/${project.artifactId}:s4</image>
-					</to>
-				</configuration>
-			</plugin>
+<!--			Removing googleLIB plugin to use build packs configuration for docker image creation-->
+<!--			<plugin>-->
+<!--				<groupId>com.google.cloud.tools</groupId>-->
+<!--				<artifactId>jib-maven-plugin</artifactId>-->
+<!--				<version>3.5.1</version>-->
+<!--				<configuration>-->
+<!--					<to>-->
+<!--						<image>biswajeetmohapatra2004/${project.artifactId}:s4</image>-->
+<!--					</to>-->
+<!--				</configuration>-->
+<!--			</plugin>-->
 		</plugins>
 	</build>
 
